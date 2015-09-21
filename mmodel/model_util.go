@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/mabetle/mcore"
 	"github.com/mabetle/mcore/mtag"
-	"mabetle/vendors/uuid"
+	"github.com/mabetle/govendors/uuid"
 	"reflect"
 )
 
