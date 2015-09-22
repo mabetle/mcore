@@ -10,6 +10,15 @@ import (
 	"strings"
 )
 
+// PrepareFile
+func PrepareFile(location string) error {
+	if IsFileExist(location){
+		return nil
+	}
+	_, err:=WriteFile(location, "")
+	return err
+}
+
 // file may not exist.
 // if file not exist, create one.
 func NewFileWriter(location string) (io.Writer, error) {
