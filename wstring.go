@@ -85,6 +85,15 @@ func (s String) IsStartsIgnoreCase(prefixs ...string) bool {
 	return false
 }
 
+func (s String) IsStartsIgnoreCaseInArray(prefixs []string) bool {
+	for _, prefix := range prefixs {
+		if s.IsStartIgnoreCase(prefix) {
+			return true
+		}
+	}
+	return false
+}
+
 // equal to IsHasSuffix
 func (s String) IsEndWith(end string) bool {
 	return s.IsHasSuffix(end)
