@@ -3,6 +3,7 @@ package mcore
 import (
 	"bytes"
 	"fmt"
+	"html/template"
 	"io"
 	"os"
 )
@@ -90,4 +91,9 @@ func (sb StringBuffer) WriteToFile(file string) (int64, error) {
 
 func (sb StringBuffer) Clear() {
 	sb.Buffer = bytes.NewBufferString("")
+}
+
+// HTML returns html template.HTML
+func (sb StringBuffer) HTML() template.HTML {
+	return template.HTML(sb.String())
 }
