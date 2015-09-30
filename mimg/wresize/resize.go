@@ -1,4 +1,4 @@
-package mimg
+package wresize
 
 import (
 	"github.com/nfnt/resize"
