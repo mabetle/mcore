@@ -45,8 +45,11 @@ func (s String) IsContainsRune(r rune) bool {
 	return strings.ContainsRune(string(s), r)
 }
 
+// IsContainIgnoreCase
 func (s String) IsContainIgnoreCase(sub string) bool {
-	return s.ToLower().IsContains(strings.ToLower(sub))
+	sl := strings.ToLower(string(s))
+	subl := strings.ToLower(sub)
+	return strings.Contains(sl, subl)
 }
 
 func (s String) Count(sep string) int {

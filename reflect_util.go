@@ -105,9 +105,51 @@ func GetFields(m interface{}) (ns []string) {
 // GetUsedFields
 func GetUsedFields(v interface{}, include, exclude string) (r []string) {
 	fs := GetFields(v)
+	return GetFieldsUsed(fs, include, exclude)
+}
+
+// GetFieldsUsed
+// Order by Include if has include
+func GetFieldsUsed(fs []string, include, exclude string) (r []string) {
 	includes := strings.Split(include, ",")
 	excludes := strings.Split(exclude, ",")
+	// has include param
+	if include != "" {
+		for _, in := range includes {
+			inString := String(in)
+			if !inString.IsInArrayIgnoreCase(fs) {
+				continue
+			}
+			if exclude != "" && inString.IsInArrayIgnoreCase(excludes) {
+				continue
+			}
+			if inString.IsContainIgnoreCase("id") || inString.IsContainIgnoreCase("password") {
+				continue
+			}
+			r = append(r, in)
+		}
+	}
+	// no include param
+	if include == "" {
+		for _, key := range fs {
+			keyString := String(key)
+			if exclude != "" && keyString.IsInArrayIgnoreCase(excludes) {
+				continue
+			}
+			if keyString.IsContainIgnoreCase("id") || keyString.IsContainIgnoreCase("password") {
+				continue
+			}
+			r = append(r, key)
+		}
+	}
+	return
+}
 
+// GetFieldsUsed2
+// Order by fs
+func GetFieldsUsed2(fs []string, include, exclude string) (r []string) {
+	includes := strings.Split(include, ",")
+	excludes := strings.Split(exclude, ",")
 	for _, key := range fs {
 		keyString := String(key)
 		// exist include and not in include, skip
@@ -118,13 +160,12 @@ func GetUsedFields(v interface{}, include, exclude string) (r []string) {
 		if keyString.IsInArrayIgnoreCase(excludes) {
 			continue
 		}
-		if keyString.IsHasSuffix("Id") || keyString.IsContains("Password") {
+		if keyString.IsContainIgnoreCase("id") || keyString.IsContainIgnoreCase("password") {
 			continue
 		}
-
 		r = append(r, key)
 	}
-	return r
+	return
 }
 
 // GetMethods
