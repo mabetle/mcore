@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// PrintFile
 func PrintFile(location string) {
 	if content, err := ioutil.ReadFile(location); err != nil {
 		fmt.Printf("Error: %v\n", err)
@@ -15,6 +16,7 @@ func PrintFile(location string) {
 	}
 }
 
+// PrintFile2
 func PrintFile2(location string) {
 	f, err := os.OpenFile(location, os.O_RDONLY, 0660)
 	if err != nil {
@@ -24,6 +26,7 @@ func PrintFile2(location string) {
 	cat(bufio.NewScanner(f))
 }
 
+// cat
 func cat(scanner *bufio.Scanner) error {
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
@@ -31,13 +34,16 @@ func cat(scanner *bufio.Scanner) error {
 	return scanner.Err()
 }
 
-func PrintSubFiles(dir string, r bool, exts ...string) {
-	result := GetSubFiles(dir, r, exts...)
+// PrintSubFiles
+// exts format: .xxx,yyy
+func PrintSubFiles(dir string, r bool, exts string) {
+	result := GetSubFiles(dir, r, exts, "", "")
 	for _, v := range result {
 		fmt.Println(v)
 	}
 }
 
+// PrintFileWithLineNumber
 func PrintFileWithLineNumber(file string) {
 	data, err := ReadFileLines(file)
 	if nil != err {

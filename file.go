@@ -12,10 +12,10 @@ import (
 
 // PrepareFile
 func PrepareFile(location string) error {
-	if IsFileExist(location){
+	if IsFileExist(location) {
 		return nil
 	}
-	_, err:=WriteFile(location, "")
+	_, err := WriteFile(location, "")
 	return err
 }
 
@@ -193,6 +193,7 @@ func IsFileExist(path string) bool {
 	return err == nil || os.IsExist(err)
 }
 
+// TouchFile
 func TouchFile(file string) error {
 	if IsFileExist(file) {
 		// TODO update modify time
@@ -204,6 +205,7 @@ func TouchFile(file string) error {
 	return err
 }
 
+// GetFileDir
 func GetFileDir(location string) string {
 	vs := strings.Split(location, "/")
 	sb := NewStringBuffer()
@@ -219,7 +221,7 @@ func GetFileDir(location string) string {
 	return sb.String()
 }
 
-//make dir
+// MakeDir make dir
 func MakeDir(dir string) error {
 	if IsFileExist(dir) {
 		return fmt.Errorf("%s is exist", dir)
@@ -233,7 +235,7 @@ func MakeDir(dir string) error {
 	return nil
 }
 
-// GetPathFiles
+// GetPathFiles returns all file in dir
 func GetDirSubFiles(dir string) (fs []string) {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -250,19 +252,32 @@ func GetDirSubFiles(dir string) (fs []string) {
 }
 
 // GetSubFiles returns dir sub files
-// exts: format .xx format .
+// exts: format .xx format.
 // r: recursive
-func GetSubFiles(dir string, r bool, exts ...string) []string {
+func GetSubFiles(
+	dir string,
+	r bool,
+	exts string,
+	skipDirs string,
+	skipFiles string,
+) []string {
 	var result []string
-	err := GetSubFilesImpl(&result, dir, r, exts...)
+	err := GetSubFilesImpl(&result, dir, r, exts, skipDirs, skipFiles)
 	if err != nil {
-		logger.Debug(err)
+		logger.Warn(err)
 	}
 	return result
 }
 
 // GetSubFilesImpl
-func GetSubFilesImpl(result *[]string, dir string, r bool, exts ...string) error {
+func GetSubFilesImpl(
+	result *[]string,
+	dir string,
+	r bool,
+	exts string,
+	skipDirs string,
+	skipFiles string,
+) error {
 	dir = String(dir).TrimEnd("/").String()
 	files, err := ioutil.ReadDir(dir)
 
@@ -270,45 +285,41 @@ func GetSubFilesImpl(result *[]string, dir string, r bool, exts ...string) error
 		return err
 	}
 
-	var extsArray []string = []string{}
-	for _, item := range exts {
-		itemArray := strings.Split(item, ",")
-		for _, v := range itemArray {
-			extsArray = append(extsArray, v)
-		}
-	}
+	extsArray := strings.Split(exts, ",")
 
 	for _, file := range files {
-		// skip start with . dir
+		// skip start with . dir or file
 		if strings.HasPrefix(file.Name(), ".") {
 			continue
 		}
-
+		// full match
+		if skipDirs != "" && String(file.Name()).IsContainsInSepStringIgnoreCase(skipDirs, ",") {
+			continue
+		}
 		if file.IsDir() {
 			if r {
-				GetSubFilesImpl(result, dir+"/"+file.Name(), r, exts...)
+				GetSubFilesImpl(result, dir+"/"+file.Name(), r, exts, skipDirs, skipFiles)
 			}
 		} else {
 			name := dir + "/" + file.Name()
+			if skipFiles != "" && String(file.Name()).IsContainsInSepStringIgnoreCase(skipFiles, ",") {
+				continue
+			}
 			//a file
-			if len(exts) > 0 {
+			if len(extsArray) > 0 {
 				for _, ext := range extsArray {
-					if !String(ext).IsStartWith(".") {
-						ext = "." + ext
-					}
 					if String(name).IsEndWith(ext) {
 						*result = append(*result, name)
 					}
 				}
-			} else {
-				*result = append(*result, name)
 			}
+			*result = append(*result, name)
 		}
 	}
 	return nil
 }
 
-// get content from somewhere may be occur error
+// WriteFileWithError get content from somewhere may be occur error
 // when error is not nil, skip write
 func WriteFileWithError(location, content string, err error) error {
 	if err != nil {
