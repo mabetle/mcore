@@ -305,15 +305,17 @@ func GetSubFilesImpl(
 			if skipFiles != "" && String(file.Name()).IsContainsInSepStringIgnoreCase(skipFiles, ",") {
 				continue
 			}
-			//a file
+			// has exts
 			if len(extsArray) > 0 {
 				for _, ext := range extsArray {
 					if String(name).IsEndWith(ext) {
 						*result = append(*result, name)
 					}
 				}
+			} else {
+				// no exts
+				*result = append(*result, name)
 			}
-			*result = append(*result, name)
 		}
 	}
 	return nil
