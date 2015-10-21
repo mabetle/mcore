@@ -22,7 +22,11 @@ func ReadLine() (result string) {
 }
 
 // ReadLineWithMsg
-func ReadLineWithMsg(msg string) string {
+func ReadLineWithMsg(msgs ... interface{}) string {
+	msg:=fmt.Sprint(msgs ... )
+	if !String(msg).IsEndWith(":"){
+		msg = msg + ":"
+	}
 	fmt.Print(msg)
 	return ReadLine()
 }
@@ -30,8 +34,8 @@ func ReadLineWithMsg(msg string) string {
 func ReadNotBlankLine() (result string) {
 	for {
 		result = ReadLine()
-		if result == "" {
-			fmt.Println("input blank line, try again")
+		if String(result).IsBlank() {
+			fmt.Print("input blank line, try again:")
 		} else {
 			break
 		}
@@ -39,7 +43,20 @@ func ReadNotBlankLine() (result string) {
 	return
 }
 
-func ReadNotBlankLineWithMsg(msg string) string {
+func ReadNotBlankLineWithMsg(msgs ... interface{}) string {
+	msg:=fmt.Sprint(msgs ... )
+	if !String(msg).IsEndWith(":"){
+		msg = msg + ":"
+	}
 	fmt.Print(msg)
 	return ReadNotBlankLine()
+}
+
+// ReadBool
+func ReadBool(dft bool, msg ... interface{})bool{
+	v:=ReadLineWithMsg(fmt.Sprint(msg...))
+	if String(v).IsBlank() {
+		return dft
+	}
+	return String(v).ToBool()
 }
