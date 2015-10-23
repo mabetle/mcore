@@ -1,7 +1,6 @@
 package msdb
 
-// SimpleTable
-//
+// SimpleTable defines SimpleTable API
 type SimpleTable interface {
 	GetColNames() []string
 	GetRows() int
@@ -13,6 +12,7 @@ type SimpleTable interface {
 	IsHasColumn(columName string) bool
 }
 
+// StringGetter define GetString API
 type StringGetter interface {
 	GetString(col int) string //default by col index
 }

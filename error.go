@@ -4,28 +4,44 @@ import (
 	"fmt"
 )
 
+// Error define Error
 type Error struct {
 	err error
 }
 
-func (t Error) Print() {
-	fmt.Printf("%v\n", t)
+// NewError creates Error
+func NewError() *Error {
+	return &Error{err: nil}
 }
 
-//
+// NewErrError creates Error with error arg
+func NewErrError(err error) *Error {
+	return &Error{err: err}
+}
+
+// PutError put error to Error
+func (e *Error) PutError(err error) *Error {
+	e.err = err
+	return e
+}
+
+// Erorr return Error error
+func (e *Error) Error() error {
+	return e.err
+}
+
+// Print print Error
+func (e *Error) Print() {
+	fmt.Printf("%v\n", e.err)
+}
+
+// IsReturnHasError check returns
 func IsReturnHasError(args ...interface{}) (r bool) {
-	defer func() {
-		if err := recover(); err != nil {
-			r = true
-			return
-		}
-	}()
 	nargs := len(args)
 	if nargs < 1 {
 		return
 	}
 	larg := args[nargs-1]
-
 	if IsError(larg) && larg != nil {
 		r = true
 		return
@@ -33,6 +49,7 @@ func IsReturnHasError(args ...interface{}) (r bool) {
 	return
 }
 
+// IsError check error.
 func IsError(v interface{}) (r bool) {
 	if _, ok := v.(error); ok {
 		r = true

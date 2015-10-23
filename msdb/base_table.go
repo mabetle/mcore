@@ -4,29 +4,36 @@ import (
 	"github.com/mabetle/mcore"
 )
 
+// BaseTable SmipleTable base
 type BaseTable struct {
 	*Cusor
 	StringGetter
 	Header []string
 }
 
+// Next for loop rows
 func (t *BaseTable) Next() bool {
 	return t.Cusor.Next()
 }
 
+// GetRowIndex returns row cursor
 func (t *BaseTable) GetRowIndex() int {
 	return t.Cusor.RowIndex
 }
 
+// GetRows returns table rows
 func (t *BaseTable) GetRows() int {
 	return t.Cusor.MaxIndex
 }
 
+// GetCols return table cols
 func (t *BaseTable) GetCols() int {
 	return len(t.Header)
 }
 
+// GetColIndex return col name index
 func (t *BaseTable) GetColIndex(colName string) (colIndex int) {
+	colIndex = -1 // means not exists.
 	for i := 0; i < t.GetCols(); i++ {
 		if colName == t.Header[i] {
 			colIndex = i
@@ -35,24 +42,31 @@ func (t *BaseTable) GetColIndex(colName string) (colIndex int) {
 	return
 }
 
+// GetStringByColName returns col name value.
 func (t *BaseTable) GetStringByColName(colName string) (value string) {
 	col := t.GetColIndex(colName)
+	if col == -1 {
+		return ""
+	}
 	return t.GetString(col)
 }
 
+// GetColNames return table col names
 func (t *BaseTable) GetColNames() []string {
 	return t.Header
 }
 
+// IsHasColumn checks columnName exists
 func (t *BaseTable) IsHasColumn(columnName string) bool {
 	return mcore.String(columnName).IsInArrayIgnoreCase(t.GetColNames())
 }
 
+// Demo demos
 func (t *BaseTable) Demo() {
 	DemoSimpleTable(t)
 }
 
-// Random Access
+// GetRowColString Random Access
 // TODO not implement yet.
 func (t *BaseTable) GetRowColString(row int, col int) (result string) {
 
