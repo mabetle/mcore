@@ -43,12 +43,22 @@ func (t *BaseTable) GetColIndex(colName string) (colIndex int) {
 }
 
 // GetStringByColName returns col name value.
-func (t *BaseTable) GetStringByColName(colName string) (value string) {
+func (t *BaseTable) GetString(colName string) (value string) {
 	col := t.GetColIndex(colName)
 	if col == -1 {
 		return ""
 	}
-	return t.GetString(col)
+	return t.GetStringByIndex(col)
+}
+
+// GetInt returns column int value
+func (t *BaseTable) GetInt(colName string) int {
+	return mcore.NewString(t.GetString(colName)).ToIntNoError()
+}
+
+// GetFloat returns column float value
+func (t *BaseTable) GetFloat(colName string) float64 {
+	return mcore.NewString(t.GetString(colName)).ToFloat64NoError()
 }
 
 // GetColNames return table col names

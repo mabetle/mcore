@@ -8,11 +8,13 @@ type SimpleTable interface {
 	GetCols() int
 	Next() bool
 	StringGetter
-	GetStringByColName(colName string) string
+	GetString(colName string) string
+	GetInt(colName string) int
+	GetFloat(colName string) float64
 	IsHasColumn(columName string) bool
 }
 
 // StringGetter define GetString API
 type StringGetter interface {
-	GetString(col int) string //default by col index
+	GetStringByIndex(col int) string //default by col index
 }
