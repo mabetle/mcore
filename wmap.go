@@ -1,16 +1,16 @@
 package mcore
 
-type KeyValue map[string]interface{}
+type KeyValueMap map[string]interface{}
 
-func NewKeyValue() KeyValue {
+func NewKeyValueMap() KeyValueMap {
 	return make(map[string]interface{})
 }
 
-func (c KeyValue) GetKeys() []string {
+func (c KeyValueMap) GetKeys() []string {
 	return GetMapKeys(c)
 }
 
-func (c KeyValue) IsHasKey(key string) bool {
+func (c KeyValueMap) IsHasKey(key string) bool {
 	return IsMapHasKey(c, key)
 }
 
