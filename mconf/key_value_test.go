@@ -8,8 +8,8 @@ import (
 
 type TestLoader struct{}
 
-func (l TestLoader) LoadKeyValue() mcore.StringKeyValue {
-	c := mcore.NewStringKeyValue()
+func (l TestLoader) LoadKeyValue() mcore.StringKeyValueMap {
+	c := mcore.NewStringKeyValueMap()
 	c.Put("a", "a")
 	c.Put("b", "0")
 	c.Put("c", "5")

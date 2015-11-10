@@ -18,7 +18,7 @@ type AppConf struct {
 	AppName     string
 	runMode     string
 	performLoad bool
-	mcore.StringKeyValue
+	mcore.StringKeyValueMap
 }
 
 func NewAppConf(dir, file, appName string) *AppConf {
@@ -62,11 +62,11 @@ func (c *AppConf) IsExist() bool {
 func (c *AppConf) Load() *AppConf {
 	if c.IsExist() {
 		logger.Tracef("Load config. AppName:%s Location:%s", c.AppName, c.Location())
-		c.StringKeyValue = ini.NewIniConfig(c.Location()).LoadKeyValue()
+		c.StringKeyValueMap = ini.NewIniConfig(c.Location()).LoadKeyValue()
 		return c
 	}
-	logger.Tracef("Location not exists, Create Default StringKeyValue. AppName:%s", c.AppName)
-	c.StringKeyValue = mcore.NewStringKeyValue()
+	logger.Tracef("Location not exists, Create Default StringKeyValueMap. AppName:%s", c.AppName)
+	c.StringKeyValueMap = mcore.NewStringKeyValueMap()
 	c.performLoad = false
 	return c
 }
@@ -76,7 +76,7 @@ func (c *AppConf) GetString(key string) string {
 		logger.Tracef("Need reload config. AppName:%s", c.AppName)
 		c.Load()
 	}
-	return c.StringKeyValue.GetString(key)
+	return c.StringKeyValueMap.GetString(key)
 }
 
 func (c *AppConf) GetVendorName() string {

@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	skv StringKeyValue = make(map[string]string)
+	skv StringKeyValueMap = make(map[string]string)
 )
 
 func init() {

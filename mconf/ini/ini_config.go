@@ -30,9 +30,9 @@ func NewIniConfig(locations ...string) *IniConfig {
 	return c
 }
 
-func (c IniConfig) LoadKeyValue() mcore.StringKeyValue {
+func (c IniConfig) LoadKeyValue() mcore.StringKeyValueMap {
 	logger.Debugf("load config from %v.", c.Locations)
-	skv := mcore.NewStringKeyValue()
+	skv := mcore.NewStringKeyValueMap()
 	for _, section := range c.Sections() {
 		options, _ := c.Config.Options(section)
 		for _, option := range options {

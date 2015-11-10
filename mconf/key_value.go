@@ -6,19 +6,19 @@ import (
 
 // KeyValueConfig implements Config interface.
 type KeyValueConfig struct {
-	mcore.StringKeyValue // store key and value.
+	mcore.StringKeyValueMap // store key and value.
 	KeyValueLoader       //load keys and values.
 }
 
 // KeyValueLoader
 type KeyValueLoader interface {
-	LoadKeyValue() mcore.StringKeyValue
+	LoadKeyValue() mcore.StringKeyValueMap
 }
 
 // NewConfig
 func NewConfig(loader KeyValueLoader) Config {
 	c := &KeyValueConfig{}
 	c.KeyValueLoader = loader
-	c.StringKeyValue = c.LoadKeyValue()
+	c.StringKeyValueMap = c.LoadKeyValue()
 	return c
 }
