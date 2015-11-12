@@ -12,19 +12,27 @@ const (
 )
 
 // ReadLine from os.Stdio
-func ReadLine() (result string) {
+func ReadLine() string {
 	r := bufio.NewReader(os.Stdin)
-	result, _ = r.ReadString(NEW_LINE_BYTE)
-	if strings.HasSuffix(result, "\n") {
-		result = strings.TrimSuffix(result, "\n")
+	result, err := r.ReadString(NEW_LINE_BYTE)
+	if err != nil {
+		fmt.Printf("Error:%s\n", err)
 	}
-	return
+	result = strings.TrimSuffix(result, "\n")
+	result = strings.TrimSuffix(result, "\r")
+	return result
+}
+
+// ReadArgs
+func ReadArgs() []string {
+	s := ReadLine()
+	return ParseStringToArgs(s)
 }
 
 // ReadLineWithMsg
-func ReadLineWithMsg(msgs ... interface{}) string {
-	msg:=fmt.Sprint(msgs ... )
-	if !String(msg).IsEndWith(":"){
+func ReadLineWithMsg(msgs ...interface{}) string {
+	msg := fmt.Sprint(msgs...)
+	if !String(msg).IsEndWith(":") {
 		msg = msg + ":"
 	}
 	fmt.Print(msg)
@@ -43,9 +51,9 @@ func ReadNotBlankLine() (result string) {
 	return
 }
 
-func ReadNotBlankLineWithMsg(msgs ... interface{}) string {
-	msg:=fmt.Sprint(msgs ... )
-	if !String(msg).IsEndWith(":"){
+func ReadNotBlankLineWithMsg(msgs ...interface{}) string {
+	msg := fmt.Sprint(msgs...)
+	if !String(msg).IsEndWith(":") {
 		msg = msg + ":"
 	}
 	fmt.Print(msg)
@@ -53,8 +61,8 @@ func ReadNotBlankLineWithMsg(msgs ... interface{}) string {
 }
 
 // ReadBool
-func ReadBool(dft bool, msg ... interface{})bool{
-	v:=ReadLineWithMsg(fmt.Sprint(msg...))
+func ReadBool(dft bool, msg ...interface{}) bool {
+	v := ReadLineWithMsg(fmt.Sprint(msg...))
 	if String(v).IsBlank() {
 		return dft
 	}
