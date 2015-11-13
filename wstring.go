@@ -90,6 +90,16 @@ func (s String) IsStartIgnoreCase(prefix string) bool {
 	return strings.HasPrefix(ls, lp)
 }
 
+// IsStartInIgnoreCase
+func (s String) IsStartInIgnoreCase(args []string) bool {
+	for _, arg := range args {
+		if String(arg).IsStartIgnoreCase(string(s)) {
+			return true
+		}
+	}
+	return false
+}
+
 // IsStartsIgnoreCase
 func (s String) IsStartsIgnoreCase(prefixs ...string) bool {
 	for _, prefix := range prefixs {

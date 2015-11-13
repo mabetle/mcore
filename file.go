@@ -110,16 +110,24 @@ func PrepareFileDir(file string) error {
 	return nil
 }
 
+func ProcessDir(dir string) string {
+	if IsWindows() {
+		return strings.Replace(dir, "/", "\\", -1)
+	} else {
+		return strings.Replace(dir, "\\", "/", -1)
+	}
+}
+
 // put string to file
 func WriteFile(file string, content string) (n int, err error) {
 	defer func() {
 		logger.Debugf("Write to file: %s, bytes: %d, ErrMsg: %v \n", file, n, err)
 	}()
+	file = ProcessDir(file)
 	//prepare dir
 	if err := PrepareFileDir(file); err != nil {
 		return 0, err
 	}
-
 	fs, e := os.Create(file)
 	if e != nil {
 		logger.Debugf("Create file error: File: %s, Error: %v", file, e)
@@ -168,6 +176,7 @@ func ReadFileAll(file string) (string, error) {
 
 // get string from text file
 func GetFileContent(file string) (string, error) {
+	file = ProcessDir(file)
 	if !IsFile(file) {
 		return "", os.ErrNotExist
 	}
