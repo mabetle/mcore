@@ -339,3 +339,33 @@ func WriteFileWithError(location, content string, err error) error {
 	_, err = WriteFile(location, content)
 	return err
 }
+
+// DirSubs include dir and files
+func DirSubs(dir string) ([]string, error) {
+	f, err := os.Open(dir)
+	if err != nil {
+		return []string{}, err
+	}
+	defer f.Close()
+	return f.Readdirnames(-1)
+}
+
+// DirSubFiles returns dir sub files.
+func DirSubFiles(dir string) ([]string, error) {
+	f, err := os.Open(dir)
+	if err != nil {
+		return []string{}, err
+	}
+	defer f.Close()
+	infos, err := f.Readdir(-1)
+	if err != nil {
+		return []string{}, err
+	}
+	var names []string
+	for _, fi := range infos {
+		if !fi.IsDir() {
+			names = append(names, fi.Name())
+		}
+	}
+	return names, nil
+}

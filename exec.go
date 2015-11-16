@@ -2,30 +2,20 @@ package mcore
 
 import (
 	"os/exec"
-	"path/filepath"
 )
 
 // NewCommand return new exec cmd
 // args[0] cmd name
 // args[1:] cmd args
 func NewCommand(args []string) *exec.Cmd {
-	if len(args) == 0 {
+	n := len(args)
+	if n == 0 {
 		return nil
 	}
-	name := args[0]
-	cmd := &exec.Cmd{
-		Path: name,
-		Args: args,
+	if n == 1 {
+		return exec.Command(args[0])
 	}
-
-	if filepath.Base(name) == name {
-		if lp, err := exec.LookPath(name); err != nil {
-			//cmd.lookPathErr = err
-		} else {
-			cmd.Path = lp
-		}
-	}
-	return cmd
+	return exec.Command(args[0], args[1:]...)
 }
 
 // NewCommandFromString
