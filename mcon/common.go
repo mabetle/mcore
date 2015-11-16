@@ -1,6 +1,7 @@
 package mcon
 
 import (
+	"fmt"
 	"github.com/mabetle/mcore/mterm"
 )
 
@@ -40,3 +41,14 @@ func PrintGreen(s string)  { GetColorPrinter().PrintGreen(s) }
 func PrintBlue(s string)    { GetColorPrinter().PrintBlue(s) }
 func PrintMagenta(s string) { GetColorPrinter().PrintMagenta(s) }
 func PrintCyan(s string)    { GetColorPrinter().PrintCyan(s) }
+
+func PrintfBlack(f string, args ...interface{}) { PrintBlack(fmt.Sprintf(f, args...)) }
+func PrintfWhite(f string, args ...interface{}) { PrintWhite(fmt.Sprintf(f, args...)) }
+
+func PrintfRed(f string, args ...interface{})    { PrintRed(fmt.Sprintf(f, args...)) }
+func PrintfYellow(f string, args ...interface{}) { PrintYellow(fmt.Sprintf(f, args...)) }
+func PrintfGreen(f string, args ...interface{})  { PrintGreen(fmt.Sprintf(f, args...)) }
+
+func PrintfBlue(f string, args ...interface{})    { PrintBlue(fmt.Sprintf(f, args...)) }
+func PrintfMagenta(f string, args ...interface{}) { PrintMagenta(fmt.Sprintf(f, args...)) }
+func PrintfCyan(f string, args ...interface{})    { PrintCyan(fmt.Sprintf(f, args...)) }

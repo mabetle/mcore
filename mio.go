@@ -3,6 +3,7 @@ package mcore
 import (
 	"bufio"
 	"fmt"
+	"github.com/mabetle/mcore/mcon"
 	"os"
 	"strings"
 )
@@ -16,7 +17,7 @@ func ReadLine() string {
 	r := bufio.NewReader(os.Stdin)
 	result, err := r.ReadString(NEW_LINE_BYTE)
 	if err != nil {
-		fmt.Printf("Error:%s\n", err)
+		mcon.PrintfRed("Error:%s\n", err)
 	}
 	result = strings.TrimSuffix(result, "\n")
 	result = strings.TrimSuffix(result, "\r")
@@ -35,7 +36,7 @@ func ReadLineWithMsg(msgs ...interface{}) string {
 	if !String(msg).IsEndWith(":") {
 		msg = msg + ":"
 	}
-	fmt.Print(msg)
+	mcon.PrintGreen(msg)
 	return ReadLine()
 }
 
@@ -43,7 +44,7 @@ func ReadNotBlankLine() (result string) {
 	for {
 		result = ReadLine()
 		if String(result).IsBlank() {
-			fmt.Print("input blank line, try again:")
+			mcon.PrintRed("input blank line, try again:")
 		} else {
 			break
 		}

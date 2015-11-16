@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var m KeyValue = make(map[string]interface{})
+var m KeyValueMap = make(map[string]interface{})
 
 func InitMap() {
 	m["a"] = "a"
