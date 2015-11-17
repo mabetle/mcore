@@ -49,6 +49,8 @@ func PrintfRed(f string, args ...interface{})    { PrintRed(fmt.Sprintf(f, args.
 func PrintfYellow(f string, args ...interface{}) { PrintYellow(fmt.Sprintf(f, args...)) }
 func PrintfGreen(f string, args ...interface{})  { PrintGreen(fmt.Sprintf(f, args...)) }
 
-func PrintfBlue(f string, args ...interface{})    { PrintBlue(fmt.Sprintf(f, args...)) }
+// PrintfBlue print msg in blue color
+func PrintfBlue(f string, args ...interface{}) { PrintBlue(fmt.Sprintf(f, args...)) }
+
 func PrintfMagenta(f string, args ...interface{}) { PrintMagenta(fmt.Sprintf(f, args...)) }
 func PrintfCyan(f string, args ...interface{})    { PrintCyan(fmt.Sprintf(f, args...)) }

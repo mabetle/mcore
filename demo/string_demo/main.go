@@ -29,8 +29,25 @@ func DemoSubSep() {
 	fmt.Println(in.SubRightSep("?"))
 }
 
+func DemoLen() {
+	ss := "asdf"
+	zz := "中文"
+	demoStrLen(ss)
+	demoStrLen(zz)
+}
+
+func demoStrLen(ss string) {
+	s := mcore.GetFixedWidthString(ss, 10, "-", true)
+	fmt.Printf("%s Len:%d StringLen: %d StringWidth: %d\n",
+		s,
+		len(ss),
+		mcore.StringLen(ss),
+		mcore.StringWidth(ss))
+}
+
 func main() {
 	//DemoTime()
 	//DemoExcelTime("42009") // 2015-01-05
-	DemoSubSep()
+	//DemoSubSep()
+	DemoLen()
 }

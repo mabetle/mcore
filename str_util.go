@@ -9,6 +9,7 @@ import (
 	"golang.org/x/text/transform"
 	"io/ioutil"
 	"strings"
+	"unicode"
 )
 
 const (
@@ -97,15 +98,47 @@ func SubByByte(str string, length int) string {
 	return ""
 }
 
-// GetFixedWidthNum
+// GetFixedWidthNum used for line number
+// add space left side, align right
 func GetFixedWidthNum(num int, width int) string {
 	s := fmt.Sprint(num)
-	if len(s) > width {
-		return s
+	return GetFixedWidthString(s, width, " ", false)
+}
+
+// GetFixedWidthStringAlignLeft add blank to left
+// used for pretty output.
+func GetFixedWidthStringAlignLeft(v string, width int) string {
+	return GetFixedWidthString(v, width, " ", true)
+}
+
+// GetFixedWidthStringAlignRight add blank right
+func GetFixedWidthStringAlignRight(v string, width int) string {
+	return GetFixedWidthString(v, width, " ", false)
+}
+
+// GetFixedWidthString
+func GetFixedWidthString(
+	v string,
+	width int,
+	fil string,
+	alignLeft bool) string {
+	n := StringWidth(v)
+	// not cut long string
+	if n >= width {
+		return v
 	}
-	fillNums := width - len(s)
-	fillStr := strings.Repeat(" ", fillNums)
-	return fillStr + s
+	// less than width
+	fillNums := width - n
+	if fil == "" {
+		fil = " "
+	}
+	fillStr := strings.Repeat(fil, fillNums)
+	// add blank right side
+	if alignLeft {
+		return v + fillStr
+	}
+	// add blank left side
+	return fillStr + v
 }
 
 // EncodeGBK
@@ -122,4 +155,31 @@ func UpperCaseFirst(in string) string {
 	begin = strings.ToUpper(begin)
 	end := SubRight(in, 1)
 	return begin + end
+}
+
+// StringWidth chinese char is width 2
+func StringWidth(v string) int {
+	r := 0
+	for _, c := range []rune(v) {
+		if IsChineseChar(string(c)) {
+			r = r + 2
+		} else {
+			r = r + 1
+		}
+	}
+	return r
+}
+
+func IsChineseChar(str string) bool {
+	for _, r := range str {
+		if unicode.Is(unicode.Scripts["Han"], r) {
+			return true
+		}
+	}
+	return false
+}
+
+// StringLen how many chars
+func StringLen(v string) int {
+	return len([]rune(v))
 }
