@@ -135,14 +135,14 @@ func WrapDate(t time.Time) Date {
 	return NewDate(y, m, d)
 }
 
-func GetCurrentYear() Year {
-	return GetCurrentDate().Year
+func GetCurrentYear() int {
+	return int(GetCurrentDate().Year)
 }
-func GetCurrentMonth() Month {
-	return GetCurrentDate().Month
+func GetCurrentMonth() int {
+	return int(GetCurrentDate().Month)
 }
-func GetCurrentDay() Day {
-	return GetCurrentDate().Day
+func GetCurrentDay() int {
+	return int(GetCurrentDate().Day)
 }
 
 func NewTime(h, m, s int) (t Time) {
@@ -255,9 +255,7 @@ func FormatTime(t time.Time) string {
 }
 
 // PrintTime
-func PrintTime(t time.Time){
-	ts:=FormatTime(t)
+func PrintTime(t time.Time) {
+	ts := FormatTime(t)
 	fmt.Printf("%s\n", ts)
 }
-
-
