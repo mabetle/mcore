@@ -4,58 +4,66 @@ import (
 	"fmt"
 )
 
-type Result struct{
-	Error	error //strore error
-	Msg		string //store not error message.
+type Results struct {
+	Errors []error  //strore error
+	Msgs   []string //store not error message.
 }
 
-func NewSuccessResult(msg string)*Result{
-	return &Result{Error:nil,Msg:msg}
-}
-
-func NewErrorResult(errMsg string)*Result{
-	return &Result{Error:fmt.Errorf(errMsg),
-		Msg:errMsg}
-}
-
-func NewSuccessResultf(format string, args ... interface{})*Result{
-	return NewSuccessResult(fmt.Sprintf(format, args ...))
-}
-
-func NewErrorResultf(format string, args ... interface{})*Result{
-	return NewErrorResult(fmt.Sprintf(format, args ... ))
-}
-
-func (r Result)IsHasError()(b bool){
-	if r.Error != nil{
-		b = true
-	}
-	return
-}
-
-// reverse to IsHasError
-func (r Result)IsSuccess()(b bool){
-	return !r.IsHasError()
-}
-
-// Print error msg
-func (r Result)CheckError(){
-	if r.IsHasError(){
-		fmt.Println(r.Error)
+func NewResults() *Results {
+	return &Results{
+		Errors: []error{},
+		Msgs:   []string{},
 	}
 }
 
-// print success msg
-func (r Result)CheckSuccess(){
-	if r.IsSuccess(){
-		fmt.Println(r.Msg)
+func (r *Results) RecordMsg(msg string) {
+	r.Msgs = append(r.Msgs, msg)
+}
+
+func (r *Results) RecordError(err error) {
+	r.Errors = append(r.Errors, err)
+}
+
+func (r *Results) RecordErrMsg(errMsg string) {
+	r.RecordError(fmt.Errorf(errMsg))
+}
+
+func (r *Results) RecordfMsg(format string, args ...interface{}) {
+	r.RecordfMsg(fmt.Sprintf(format, args...))
+}
+
+func (r *Results) RecordfError(format string, args ...interface{}) {
+	r.RecordErrMsg(fmt.Sprintf(format, args...))
+}
+
+func (r *Results) IsHasError() bool {
+	return len(r.Errors) > 0
+}
+
+func (r *Results) IsHasMsg() bool {
+	return len(r.Msgs) > 0
+}
+
+func (r *Results) PrintErrors() {
+	if !r.IsHasError() {
+		fmt.Println("No errors")
+		return
+	}
+	for i, err := range r.Errors {
+		fmt.Printf("Error %d: %v\n", i+1, err)
 	}
 }
 
-// print result msg, if error, print error msg.
-func (r Result)Check(){
-	r.CheckError()
-	r.CheckSuccess()
+func (r *Results) PrintMsgs() {
+	if !r.IsHasMsg() {
+		fmt.Printf("No messages.\n")
+	}
+	for i, v := range r.Msgs {
+		fmt.Printf("Msg %d: %v\n", i+1, v)
+	}
 }
 
-
+func (r *Results) Print() {
+	r.PrintErrors()
+	r.PrintMsgs()
+}
