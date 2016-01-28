@@ -87,3 +87,23 @@ func ReadBool(dft bool, msg ...interface{}) bool {
 	}
 	return String(v).ToBool()
 }
+
+// ReadSelectArray returns select array elements.
+// vs should has elements
+func ReadSelectArray(vs []string, msg ...interface{}) string {
+	for k, v := range vs {
+		fmt.Printf("%d:%s\n", k, v)
+	}
+	mmsg := fmt.Sprint(msg...)
+	if mmsg == "" {
+		mmsg = "Please select one"
+	}
+	s := ReadInt(mmsg)
+	n := len(vs)
+	// out of range
+	if s > n-1 || s < 0 {
+		fmt.Printf("%d out of max range, shoud from 0 to %d\n", s, n-1)
+		return ReadSelectArray(vs, msg...)
+	}
+	return vs[s]
+}

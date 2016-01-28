@@ -45,9 +45,18 @@ func demoStrLen(ss string) {
 		mcore.StringWidth(ss))
 }
 
+func demoConverse() {
+	a := "0"
+	n, err := mcore.StrToInt(a)
+	fmt.Printf("%d,%v\n", n, err)
+	b := mcore.ReadInt("input int")
+	fmt.Printf("%v\n", b)
+}
+
 func main() {
 	//DemoTime()
 	//DemoExcelTime("42009") // 2015-01-05
 	//DemoSubSep()
-	DemoLen()
+	//DemoLen()
+	demoConverse()
 }

@@ -39,3 +39,13 @@ func (r *Errors) Error() error {
 func (r Errors) Len() int {
 	return len(r.errs)
 }
+
+// Print prints errors
+func (r *Errors) Print() {
+	if !r.HasError() {
+		fmt.Printf("No error\n")
+	}
+	for i, err := range r.errs {
+		fmt.Printf("Error %d: %s\n", i+1, err)
+	}
+}
