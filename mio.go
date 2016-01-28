@@ -61,6 +61,24 @@ func ReadNotBlankLineWithMsg(msgs ...interface{}) string {
 	return ReadNotBlankLine()
 }
 
+// ReadInt
+func ReadInt(msg ...interface{}) int {
+	v := ReadLineWithMsg(msg...)
+	n, err := StrToInt(v)
+	if err != nil {
+		return ReadInt("Wrong int format,try again:")
+	}
+	return n
+}
+
+func ReadNotZeroInt(msg ...interface{}) int {
+	v := ReadInt(msg...)
+	if v == 0 {
+		return ReadNotZeroInt("Input not zero int, try again:")
+	}
+	return v
+}
+
 // ReadBool
 func ReadBool(dft bool, msg ...interface{}) bool {
 	v := ReadLineWithMsg(fmt.Sprint(msg...))
