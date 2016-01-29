@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"mabetle/apps/mca/web/app/mweb"
+	"mabetle/libs/mca/web/app/mweb"
 	"github.com/mabetle/mcore"
 	"github.com/mabetle/mcore/mjson"
 	"reflect"

@@ -3,7 +3,7 @@ package mrun
 import (
 	"fmt"
 	"github.com/mabetle/mcore"
-	. "github.com/mabetle/mmsg"
+	"github.com/mabetle/mmsg"
 )
 
 // run all runners and funcs
@@ -16,7 +16,7 @@ func RunAll() {
 func Main() {
 	ShowMenu()
 	for {
-		key := mcore.ReadNotBlankLineWithMsg(Message("msg-input-which-run"))
+		key := mcore.ReadNotBlankLineWithMsg(mmsg.LocaleMessage("msg-input-which-run"))
 		if mcore.String(key).TrimSpace().IsIn("q", "quit", "exit") {
 			return
 		}
@@ -32,16 +32,6 @@ func Main() {
 
 		if mcore.String(key).TrimSpace().IsIn("h", "help") {
 			ShowHelp()
-			continue
-		}
-
-		if mcore.String(key).TrimSpace().IsIn("en") {
-			SetLocale(key)
-			continue
-		}
-
-		if mcore.String(key).TrimSpace().IsIn("zh") {
-			SetLocale(key)
 			continue
 		}
 

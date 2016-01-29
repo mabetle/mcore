@@ -1,6 +1,7 @@
 package msdb
 
 import (
+	"fmt"
 	"github.com/mabetle/mcore"
 )
 
@@ -79,6 +80,6 @@ func (t *BaseTable) Demo() {
 // GetRowColString Random Access
 // TODO not implement yet.
 func (t *BaseTable) GetRowColString(row int, col int) (result string) {
-
+	fmt.Printf("GetRowColString not implement\n")
 	return
 }

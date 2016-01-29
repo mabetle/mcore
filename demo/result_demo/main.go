@@ -6,12 +6,11 @@ import (
 
 func Demo() {
 	results := mcore.NewResults()
-	for i := 0; i < 10; i++ {
-		results.RecordErrorMsg("error")
-		results.RecordMsg("msg")
+	for i := 0; i < 100000; i++ {
+		results.RecordErrorMsg("error", i)
+		results.RecordMsg("msg", i)
 	}
-
-	results.Print()
+	//results.Print()
 }
 
 func main() {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"mabetle/apps/account/models"
+	"mabetle/libs/account/models"
 	"github.com/mabetle/mcore"
 )
 
