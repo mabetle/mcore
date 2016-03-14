@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 )
 
 // GetType returns value type.
@@ -210,6 +211,12 @@ func GetFieldValue(v interface{}, field string) (r string) {
 	case reflect.Float64, reflect.Float32:
 		r = fmt.Sprintf("%.2f", val.Float())
 	default:
+		// process time
+		vi := val.Interface()
+		if vc, ok := vi.(time.Time); ok {
+			r = FormatTime(vc)
+			break
+		}
 		r = fmt.Sprintf("%v", val)
 	}
 	return

@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
-	"mabetle/libs/account/models"
 	"github.com/mabetle/mcore"
+	"mabetle/libs/account/models"
+	"mabetle/libs/demo/beans"
+	//"reflect"
+	"time"
 )
 
 func DemoUsedField() {
@@ -30,6 +33,39 @@ func DemoTypeName() {
 	fmt.Printf("%s\n", mcore.GetElementTypeName(rows))
 }
 
+func DemoGetValue() {
+	bean := beans.DemoForm{}
+	bean.UserName = "demo"
+	bean.Age = 33
+	bean.IsEnabled = true
+	bean.CreateTime = time.Now()
+
+	v := mcore.GetReflectFieldValue(bean, "CreateTime")
+	fmt.Printf("%+v\n", v)
+
+	vk := v.Kind()
+	fmt.Printf("%+v\n", vk)
+
+	typ := v.Type()
+	fmt.Printf("%+v\n", typ)
+	fmt.Printf("%+v\n", typ.Name())
+	fmt.Printf("%+v\n", typ.String())
+
+	if typ.Name() == "Time" {
+		fmt.Printf("%v\n", v)
+	}
+	vi := v.Interface()
+
+	if vc, ok := vi.(time.Time); ok {
+		a := mcore.FormatTime(vc)
+		fmt.Printf("%v\n", a)
+	}
+
+	//a := mcore.GetFieldValue(&bean, "CreateTime")
+	//fmt.Printf("%v\n", a)
+}
+
 func main() {
-	DemoTypeName()
+	//DemoTypeName()
+	DemoGetValue()
 }
