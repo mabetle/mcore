@@ -103,7 +103,7 @@ func GetArgInt(name string, defaultValue int, args ...string) int {
 	return n
 }
 
-func GetArgExists(name string, args ...string) bool {
+func IsArgExists(name string, args ...string) bool {
 	for _, a := range args {
 		arg := GetString(a)
 		arg = strings.TrimSpace(arg)
