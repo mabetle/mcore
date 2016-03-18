@@ -1,6 +1,7 @@
 package mcore
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -60,19 +61,37 @@ func (a Args) VArgs(index int) string {
 	return a[index]
 }
 
+func GetParseArgs(args ...string) []string {
+	parseArgs := []string{}
+	for _, arg := range args {
+		// muliti lines args
+		if strings.Contains(arg, "\n") {
+			nas := strings.Split(arg, "\n")
+			parseArgs = append(parseArgs, GetParseArgs(nas...)...)
+		}
+		// seperate by blank
+		if strings.Contains(arg, " ") {
+			nas := strings.Split(arg, " ")
+			parseArgs = append(parseArgs, GetParseArgs(nas...)...)
+		}
+		parseArgs = append(parseArgs, arg)
+	}
+	return parseArgs
+}
+
 // GetArgString arg format: a=b
 func GetArgString(name string, defaultValue string, args ...string) string {
 	// process Args
-	for _, a := range args {
+	for _, a := range GetParseArgs(args...) {
 		arg := GetString(a)
 		//arg format: a=b
 		arg = strings.TrimSpace(arg)
 		kv := strings.Split(arg, "=")
-		if len(kv) != 2 {
-			continue
+		value := ""
+		if len(kv) == 2 {
+			value = strings.TrimSpace(kv[1])
 		}
 		key := strings.TrimSpace(kv[0])
-		value := strings.TrimSpace(kv[1])
 		if NewString(key).IsEqualIgnoreCase(name) {
 			return value
 		}
@@ -104,7 +123,7 @@ func GetArgInt(name string, defaultValue int, args ...string) int {
 }
 
 func IsArgExists(name string, args ...string) bool {
-	for _, a := range args {
+	for _, a := range GetParseArgs(args...) {
 		arg := GetString(a)
 		arg = strings.TrimSpace(arg)
 		//arg format: a=b
@@ -115,4 +134,14 @@ func IsArgExists(name string, args ...string) bool {
 		}
 	}
 	return false
+}
+
+// JoinArgs
+func JoinArgs(renderArgs map[string]interface{}, args ...string) []string {
+	r := []string{}
+	for k, v := range renderArgs {
+		r = append(r, fmt.Sprintf("%s=%v", k, v))
+	}
+	r = append(r, GetParseArgs(args...)...)
+	return r
 }
