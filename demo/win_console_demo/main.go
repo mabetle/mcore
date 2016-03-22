@@ -9,6 +9,7 @@ var (
 	c = mcon.NewConsole()
 )
 
+// Demo demo
 func Demo() {
 	for i := 0; i <= 256; i++ {
 		if i%16 == 0 {
@@ -18,6 +19,7 @@ func Demo() {
 	}
 }
 
+// DemoFunc demo
 func DemoFunc() {
 	c.PrintWhite("White")
 	c.PrintRed("Red")

@@ -5,6 +5,7 @@ import (
 	"github.com/mabetle/mcore"
 )
 
+// DemoReadArray demo
 func DemoReadArray() {
 	vs := []string{
 		"a",

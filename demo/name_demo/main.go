@@ -5,6 +5,7 @@ import (
 	"github.com/mabetle/mcore"
 )
 
+// Demo demo
 func Demo() {
 	name := "How_HOW-How_how"
 	println(name)
@@ -12,6 +13,7 @@ func Demo() {
 	println(mcore.UpperCaseFirst("how are you"))
 }
 
+// DemoKey demo
 func DemoKey() {
 	keyStr := mcore.NewString("OrgName-label")
 	//keyStr = keyStr.TrimStarts("label.", "msg.", "label-", "msg-")

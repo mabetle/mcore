@@ -31,11 +31,12 @@ func NewArrayList(model interface{}) *ArrayList {
 	return l
 }
 
+// Len return length of value
 func (s *ArrayList) Len() int {
 	return len(s.values)
 }
 
-// for loop
+// Next for loop
 func (s *ArrayList) Next() bool {
 	if s.Len() == 0 {
 		return false
@@ -48,20 +49,24 @@ func (s *ArrayList) Next() bool {
 	return true
 }
 
+// Put put value
 func (s *ArrayList) Put(values ...interface{}) {
 	for _, v := range values {
 		s.values = append(s.values, v)
 	}
 }
 
+// Value returns cursor value
 func (s *ArrayList) Value() interface{} {
 	return s.values[s.cursor]
 }
 
+// Type return reflect type
 func (s *ArrayList) Type() reflect.Type {
 	return s.typ
 }
 
+// Remove remove
 func (s *ArrayList) Remove(value interface{}) {
 	tmp := []interface{}{}
 	for _, e := range s.values {
@@ -73,6 +78,7 @@ func (s *ArrayList) Remove(value interface{}) {
 	s.values = tmp
 }
 
+// IsContain is contain value
 func (s *ArrayList) IsContain(value interface{}) bool {
 	for _, e := range s.values {
 		if e == value {
@@ -82,6 +88,7 @@ func (s *ArrayList) IsContain(value interface{}) bool {
 	return false
 }
 
+// Print out put
 func (s *ArrayList) Print() {
 	fmt.Println("Data in ArrayList:")
 	for s.Next() {

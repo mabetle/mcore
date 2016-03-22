@@ -5,6 +5,7 @@ import (
 	"github.com/mabetle/mcore"
 )
 
+// User demo
 type User struct {
 	Name string
 }
@@ -13,6 +14,7 @@ func (m User) String() string {
 	return m.Name
 }
 
+// Demo demo
 func Demo() {
 	l := mcore.NewArrayList(User{})
 	l.Put(User{Name: "a"})
@@ -22,6 +24,7 @@ func Demo() {
 	l.Print()
 }
 
+// Demo2 demo
 func Demo2() {
 	s := ""
 	l := mcore.NewArrayList(s)

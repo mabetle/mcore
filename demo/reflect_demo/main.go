@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// DemoUsedField demo
 func DemoUsedField() {
 	m := models.Account{}
 	include := "UserName,Email"
@@ -17,9 +18,11 @@ func DemoUsedField() {
 	fmt.Printf("%v\n", r)
 }
 
+// Temp define
 type Temp struct {
 }
 
+// DemoTypeName demo
 func DemoTypeName() {
 	fmt.Printf("%s\n", mcore.GetElementTypeName("hello"))
 	fmt.Printf("%s\n", mcore.GetElementTypeName(Temp{}))
@@ -33,6 +36,7 @@ func DemoTypeName() {
 	fmt.Printf("%s\n", mcore.GetElementTypeName(rows))
 }
 
+// DemoGetValue demo
 func DemoGetValue() {
 	bean := beans.DemoForm{}
 	bean.UserName = "demo"

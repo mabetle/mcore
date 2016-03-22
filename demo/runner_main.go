@@ -4,16 +4,17 @@ import (
 	"github.com/mabetle/mcore/mrun"
 )
 
-func AddFunc(fn func(), args ... string){
-	mrun.AddFunc(fn , args ... )
+// AddFunc add func
+func AddFunc(fn func(), args ...string) {
+	mrun.AddFunc(fn, args...)
 }
 
-func AddRunner(r mrun.Runner, args ... string){
-	mrun.AddRunner(r, args ... )
+// AddRunner add runner
+func AddRunner(r mrun.Runner, args ...string) {
+	mrun.AddRunner(r, args...)
 }
 
-func Main(){
+// Main main
+func Main() {
 	mrun.Main()
 }
-
-

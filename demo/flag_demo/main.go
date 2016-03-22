@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/mabetle/mcore"
 	"fmt"
+	"github.com/mabetle/mcore"
 )
 
-func Demo(){
+// Demo
+func Demo() {
 	fmt.Println(mcore.GetFlagString("mode"))
 }
 

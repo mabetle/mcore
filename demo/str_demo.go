@@ -5,13 +5,12 @@ import (
 	"github.com/mabetle/mcore"
 )
 
-func init(){
+func init() {
 	AddFunc(DemoUpper, "upper")
 }
 
+// DemoUpper demo
+func DemoUpper() {
 
-func DemoUpper(){
 	fmt.Println(mcore.ToUpper("Hello"))
 }
-
-

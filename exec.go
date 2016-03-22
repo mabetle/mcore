@@ -18,7 +18,7 @@ func NewCommand(args []string) *exec.Cmd {
 	return exec.Command(args[0], args[1:]...)
 }
 
-// NewCommandFromString
+// NewCommandFromString create
 func NewCommandFromString(cmd string) *exec.Cmd {
 	return NewCommand(ParseStringToArgs(cmd))
 }

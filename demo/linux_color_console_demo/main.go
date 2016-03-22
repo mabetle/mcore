@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/mgutz/ansi"
 	"github.com/mabetle/mcore/mcon"
+	"github.com/mgutz/ansi"
 )
 
 /*
@@ -14,6 +14,7 @@ var (
 	c = mcon.NewXtermConsole()
 )
 
+// Demo demo
 func Demo() {
 	// colorize a string, slowest method
 	msg := ansi.Color("foo", "red+b:white")
@@ -33,6 +34,7 @@ func Demo() {
 
 }
 
+// DemoWrap demo
 func DemoWrap() {
 	c.PrintBlack("Black")
 	c.PrintWhite("White")

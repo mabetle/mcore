@@ -14,7 +14,7 @@ func PutEnv(name, value string) error {
 	return os.Setenv(name, value)
 }
 
-// IsEnvExist
+// IsEnvExist is env exists
 func IsEnvExist(name string) bool {
 	_, b := os.LookupEnv(name)
 	return b

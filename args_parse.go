@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Args wraps args
 type Args []string
 
 // ParseStringToArgs line to args
@@ -26,37 +27,45 @@ func ParseStringToArgs(s string) []string {
 	return r
 }
 
+// NewArgsFromString create Args
 func NewArgsFromString(s string) Args {
 	return Args(ParseStringToArgs(s))
 }
 
+// NewArgs creates Args
 func NewArgs(args []string) Args {
 	return Args(args)
 }
 
+// IsHasFlag returns is has flag
 func (a Args) IsHasFlag(flag string) bool {
 	return String(flag).IsInArray(a)
 }
 
+// ParseString parse string
 func (a Args) ParseString(flag string) (r string) {
 
 	return
 }
 
+// ParseInt parse int
 func (a Args) ParseInt(flag string) (r int) {
 
 	return
 }
 
+// NArgs number of args
 func (a Args) NArgs() int {
 	return len(a)
 }
 
+// NFlags number of flags
 func (a Args) NFlags() (r int) {
 
 	return
 }
 
+// VArgs value of args indexed
 func (a Args) VArgs(index int) string {
 	return a[index]
 }
@@ -99,7 +108,7 @@ func GetArgString(name string, defaultValue string, args ...string) string {
 	return defaultValue
 }
 
-// GetArgBool
+// GetArgBool return bool value
 func GetArgBool(name string, defaultValue bool, args ...string) bool {
 	dVS := "0"
 	if defaultValue {
@@ -109,7 +118,7 @@ func GetArgBool(name string, defaultValue bool, args ...string) bool {
 	return NewString(bStr).ToBool()
 }
 
-//
+// GetArgInt returns int value
 func GetArgInt(name string, defaultValue int, args ...string) int {
 	iStr := GetArgString(name, "", args...)
 	if iStr == "" {
@@ -122,6 +131,7 @@ func GetArgInt(name string, defaultValue int, args ...string) int {
 	return n
 }
 
+// IsArgExists is exists arg
 func IsArgExists(name string, args ...string) bool {
 	for _, a := range GetParseArgs(args...) {
 		arg := GetString(a)
@@ -136,7 +146,7 @@ func IsArgExists(name string, args ...string) bool {
 	return false
 }
 
-// JoinArgs
+// JoinArgs join args
 func JoinArgs(renderArgs map[string]interface{}, args ...string) []string {
 	r := []string{}
 	for k, v := range renderArgs {

@@ -6,29 +6,34 @@ import (
 	"time"
 )
 
+// DemoNow demo
 func DemoNow() {
 	ds := time.Now()
 	mcore.PrintTime(ds)
 	fmt.Printf("")
 }
 
+// DemoTime demo
 func DemoTime() {
 	ds := "2015-09-06 00:00:00"
 	t, _ := mcore.NewString(ds).ToTime()
 	mcore.PrintTime(t)
 }
 
+// DemoExcelTime demo
 func DemoExcelTime(days string) {
 	t := mcore.String(days).ToExcelTime()
 	mcore.PrintTime(t)
 }
 
+// DemoSubSep demo
 func DemoSubSep() {
 	in := mcore.NewString("abc?def")
 	fmt.Println(in.SubLeftSep("?"))
 	fmt.Println(in.SubRightSep("?"))
 }
 
+// DemoLen demo
 func DemoLen() {
 	ss := "asdf"
 	zz := "中文"

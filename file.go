@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-// PrepareFile
+// PrepareFile prepare file
 func PrepareFile(location string) error {
 	location = ProcessDir(location)
 	if IsFileExist(location) {
@@ -20,7 +20,7 @@ func PrepareFile(location string) error {
 	return err
 }
 
-// file may not exist.
+// NewFileWriter file may not exist.
 // if file not exist, create one.
 func NewFileWriter(location string) (io.Writer, error) {
 	location = ProcessDir(location)
@@ -34,7 +34,7 @@ func NewFileWriter(location string) (io.Writer, error) {
 	return bufio.NewWriter(fs), nil
 }
 
-// get file modified time
+// GetFileModifyTime returns file modified time
 func GetFileModifyTime(file string) (int64, error) {
 	file = ProcessDir(file)
 	f, e := os.Stat(file)
@@ -44,7 +44,7 @@ func GetFileModifyTime(file string) (int64, error) {
 	return f.ModTime().Unix(), nil
 }
 
-// get file size as how many bytes
+// GetFileSize return files bytes
 func GetFileSize(file string) (int64, error) {
 	file = ProcessDir(file)
 	f, e := os.Stat(file)
@@ -54,20 +54,20 @@ func GetFileSize(file string) (int64, error) {
 	return f.Size(), nil
 }
 
-// delete file
+// RemoveFile delete file
 func RemoveFile(file string) error {
 	file = ProcessDir(file)
 	return os.Remove(file)
 }
 
-// rename file name
+// RenameFile rename file name
 func RenameFile(file string, to string) error {
 	file = ProcessDir(file)
 	to = ProcessDir(to)
 	return os.Rename(file, to)
 }
 
-// move file
+// MoveFile move file
 // if the newPath not exist, create one
 // make sure move can success.
 func MoveFile(oldPath, newPath string) error {
@@ -76,19 +76,19 @@ func MoveFile(oldPath, newPath string) error {
 	return nil
 }
 
-// WriteFileLines
+// WriteFileLines write file lines
 func WriteFileLines(file string, lines []string) (int, error) {
 	content := StringArray(lines).MergeWithOsNewLine()
 	return WriteFile(file, content)
 }
 
-// WriteFileBytes
+// WriteFileBytes write file bytes
 func WriteFileBytes(file string, v []byte) error {
 	r := bytes.NewBuffer(v)
 	return WriteFileReader(file, r)
 }
 
-// WriteFileReader
+// WriteFileReader write file header
 func WriteFileReader(file string, r io.Reader) error {
 	file = ProcessDir(file)
 	if err := PrepareFileDir(file); err != nil {
@@ -104,6 +104,7 @@ func WriteFileReader(file string, r io.Reader) error {
 	return nil
 }
 
+// PrepareFileDir prepare file directory
 func PrepareFileDir(file string) error {
 	file = ProcessDir(file)
 	dir := GetFileDir(file)
@@ -118,6 +119,7 @@ func PrepareFileDir(file string) error {
 	return nil
 }
 
+// ProcessDir process directory
 func ProcessDir(dir string) string {
 	// process dir sperator
 	if IsWindows() {
@@ -130,7 +132,7 @@ func ProcessDir(dir string) string {
 	return dir
 }
 
-// put string to file
+// WriteFile put string to file
 func WriteFile(file string, content string) (n int, err error) {
 	// after write, logger result
 	defer func() {
@@ -151,19 +153,22 @@ func WriteFile(file string, content string) (n int, err error) {
 	return
 }
 
-// WriteFileGBK
+// WriteFileGBK write file
 func WriteFileGBK(file, text string) (int, error) {
 	return WriteFile(file, EncodeGBK(text))
 }
 
+// AppendFile append file
 func AppendFile(file string, appendContent string) (int, error) {
 	return AppendFileByLocation(file, appendContent, false)
 }
 
+// AppendFileBefore append file from beginning
 func AppendFileBefore(file string, appendContent string) (int, error) {
 	return AppendFileByLocation(file, appendContent, true)
 }
 
+// AppendFileByLocation append file by location
 func AppendFileByLocation(file string, appendContent string, before bool) (int, error) {
 	file = ProcessDir(file)
 	if IsFileExist(file) {
@@ -182,12 +187,12 @@ func AppendFileByLocation(file string, appendContent string, before bool) (int, 
 	return WriteFile(file, appendContent)
 }
 
-// same to GetContent
+// ReadFileAll same to GetContent
 func ReadFileAll(file string) (string, error) {
 	return GetFileContent(file)
 }
 
-// get string from text file
+// GetFileContent returns string from text file
 func GetFileContent(file string) (string, error) {
 	file = ProcessDir(file)
 	if !IsFile(file) {
@@ -200,7 +205,7 @@ func GetFileContent(file string) (string, error) {
 	return string(b), nil
 }
 
-// it returns false when it's a directory or does not exist.
+// IsFile returns false when it's a directory or does not exist.
 func IsFile(file string) bool {
 	file = ProcessDir(file)
 	f, e := os.Stat(file)
@@ -210,14 +215,14 @@ func IsFile(file string) bool {
 	return !f.IsDir()
 }
 
-// IsExist returns whether a file or directory exists.
+// IsFileExist returns whether a file or directory exists.
 func IsFileExist(path string) bool {
 	path = ProcessDir(path)
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
 }
 
-// TouchFile
+// TouchFile touch file
 func TouchFile(file string) error {
 	if IsFileExist(file) {
 		// TODO update modify time
@@ -229,7 +234,7 @@ func TouchFile(file string) error {
 	return err
 }
 
-// GetRealPath
+// GetRealPath returns file real path
 func GetRealPath(file string) string {
 	f, err := os.Stat(file)
 	if err != nil {
@@ -238,7 +243,7 @@ func GetRealPath(file string) string {
 	return f.Name()
 }
 
-// GetFileDir
+// GetFileDir return file directory
 func GetFileDir(location string) string {
 	vs := strings.Split(location, "/")
 	sb := NewStringBuffer()
@@ -305,7 +310,7 @@ func GetSubFiles(
 	return result
 }
 
-// GetSubFilesImpl
+// GetSubFilesImp returns sub files
 func GetSubFilesImpl(
 	result *[]string,
 	dir string,

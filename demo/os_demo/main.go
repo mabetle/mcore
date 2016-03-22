@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// PrintEnv print env
 func PrintEnv() {
 	for _, item := range os.Environ() {
 		fmt.Println(item)
