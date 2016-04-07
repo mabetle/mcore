@@ -23,6 +23,11 @@ func GetTypeName(v interface{}) string {
 	return GetType(v).Name()
 }
 
+// GetPkgPath
+func GetPkgPath(v interface{}) string {
+	return GetType(v).PkgPath()
+}
+
 // GetElementType
 // v should be a slicce.
 func GetElementType(v interface{}) reflect.Type {
