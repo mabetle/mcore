@@ -3,34 +3,38 @@ package mcore
 import (
 	"bufio"
 	"fmt"
-	"github.com/mabetle/mcore/mcon"
 	"os"
 	"strings"
+
+	"github.com/mabetle/mcore/mcon"
 )
 
 const (
-	NEW_LINE_BYTE = byte(10)
+	// NewLine .
+	NewLine = byte(10)
 )
 
 // ReadLine from os.Stdio
 func ReadLine() string {
 	r := bufio.NewReader(os.Stdin)
-	result, err := r.ReadString(NEW_LINE_BYTE)
+	//result, err := r.ReadString(NewLine)
+	line, _, err := r.ReadLine()
 	if err != nil {
 		mcon.PrintfRed("Error:%s\n", err)
 	}
+	result := string(line)
 	result = strings.TrimSuffix(result, "\n")
 	result = strings.TrimSuffix(result, "\r")
 	return result
 }
 
-// ReadArgs
+// ReadArgs .
 func ReadArgs() []string {
 	s := ReadLine()
 	return ParseStringToArgs(s)
 }
 
-// ReadLineWithMsg
+// ReadLineWithMsg .
 func ReadLineWithMsg(msgs ...interface{}) string {
 	msg := fmt.Sprint(msgs...)
 	if !String(msg).IsEndWith(":") {
@@ -40,6 +44,7 @@ func ReadLineWithMsg(msgs ...interface{}) string {
 	return ReadLine()
 }
 
+// ReadNotBlankLine .
 func ReadNotBlankLine() (result string) {
 	for {
 		result = ReadLine()
@@ -52,6 +57,7 @@ func ReadNotBlankLine() (result string) {
 	return
 }
 
+// ReadNotBlankLineWithMsg .
 func ReadNotBlankLineWithMsg(msgs ...interface{}) string {
 	msg := fmt.Sprint(msgs...)
 	if !String(msg).IsEndWith(":") {
@@ -61,7 +67,7 @@ func ReadNotBlankLineWithMsg(msgs ...interface{}) string {
 	return ReadNotBlankLine()
 }
 
-// ReadInt
+// ReadInt .
 func ReadInt(msg ...interface{}) int {
 	v := ReadLineWithMsg(msg...)
 	n, err := StrToInt(v)
@@ -71,6 +77,7 @@ func ReadInt(msg ...interface{}) int {
 	return n
 }
 
+// ReadNotZeroInt .
 func ReadNotZeroInt(msg ...interface{}) int {
 	v := ReadInt(msg...)
 	if v == 0 {
@@ -79,7 +86,7 @@ func ReadNotZeroInt(msg ...interface{}) int {
 	return v
 }
 
-// ReadBool
+// ReadBool .
 func ReadBool(dft bool, msg ...interface{}) bool {
 	v := ReadLineWithMsg(fmt.Sprint(msg...))
 	if String(v).IsBlank() {
